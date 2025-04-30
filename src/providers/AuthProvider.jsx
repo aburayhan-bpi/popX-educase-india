@@ -7,6 +7,14 @@ const AuthProvider = ({ children }) => {
   const [user, setUser] = useState("rayhan");
   const [loading, setLoading] = useState(true);
 
+
+
+
+
+  
+
+
+
   const allInfo = {
     user,
     setUser,
