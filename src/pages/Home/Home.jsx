@@ -22,7 +22,7 @@ const Home = () => {
               <CustButton
                 btnText={"Create Account"}
                 btnStyle={
-                  "bg-[#6c25ff] text-white rounded w-full py-2 font-medium text-md"
+                  "bg-[#6c25ff] text-white rounded w-full py-2 font-medium text-md cursor-pointer"
                 }
               />
             </Link>
@@ -30,7 +30,7 @@ const Home = () => {
               <CustButton
                 btnText={"Already Registered? Login"}
                 btnStyle={
-                  "bg-[#cebafb] text-black rounded w-full py-2 font-medium text-md"
+                  "bg-[#cebafb] text-black rounded w-full py-2 font-medium text-md cursor-pointer"
                 }
               />
             </Link>
