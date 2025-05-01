@@ -1,11 +1,15 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import CustButton from "../../components/CustButton";
 import useAuth from "../../hooks/useAuth";
+import toast from "react-hot-toast";
+
 const Login = () => {
-  const { user, loading, setLoading, createUser } = useAuth(); // local loading should use
+  const { loginUser } = useAuth();
+  const navigate = useNavigate();
   //   const [email, setEmail] = useState("");
   //   const [password, setPassword] = useState();
+  const [loading, setLoading] = useState();
   const [error, setError] = useState("");
 
   const loginForm = (e) => {
@@ -17,12 +21,19 @@ const Login = () => {
       const email = form.get("email");
       const password = form.get("password");
 
-      const loginObj = {
-        email,
-        password,
-      };
-      createUser(email, password);
-      console.log(loginObj);
+      if (!email || !password) {
+        return setError("Fillup all fields.");
+      }
+
+      const result = loginUser(email, password);
+      if (result.isLogged === true) {
+        toast.success("Logged In");
+        setError("");
+        navigate("/profile");
+      } else if (result.isLogged === false) {
+        // toast.error("Login Failed");
+        setError("Invalid credentials, try again.");
+      }
     } catch (error) {
       console.log("error while form submitting...", error);
     } finally {

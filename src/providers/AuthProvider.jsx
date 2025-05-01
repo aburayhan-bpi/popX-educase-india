@@ -12,7 +12,7 @@ const AuthProvider = ({ children }) => {
   const createUser = (userInfo) => {
     setLoading(true);
 
-    // Generate random ID (you can use more robust ID generation if needed)
+    // Generate random ID
     const userId =
       Math.random().toString(36).substring(2, 15) +
       Math.random().toString(36).substring(2, 15);
@@ -33,17 +33,36 @@ const AuthProvider = ({ children }) => {
     // Save back to localStorage
     localStorage.setItem("users", JSON.stringify(updatedUsers));
 
-    // Also store current user separately if needed
+    // Also store current user separately
     localStorage.setItem("currentUser", JSON.stringify(userWithId));
     setUser(userWithId);
     setLoading(false);
     return { account_created: true };
   };
-  console.log("current user", user);
+
+  const loginUser = (email, password) => {
+    setLoading(true);
+    const allUser = JSON.parse(localStorage.getItem("users"));
+    // Match user
+    const validUser = allUser.filter(
+      (user) => user?.email === email && user?.password === password
+    );
+    if (!validUser[0]) {
+      return { isLogged: false };
+    } else if (validUser[0]) {
+      setUser(validUser[0]);
+      localStorage.setItem("currentUser", JSON.stringify(validUser[0]));
+      return { isLogged: true };
+    }
+  };
+
+  // console.log("current user", user);
+
   const allInfo = {
     user,
     setUser,
     createUser,
+    loginUser,
     loading,
     setLoading,
   };
